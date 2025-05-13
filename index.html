@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immanu's Barbershop & Electrical Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <style>
+        /* Custom CSS for the message box */
+        #message-box {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f0fdf4;
+            color: #15803d;
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid #16a34a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        #message-box.show {
+            display: block;
+        }
+
+        /* Style for the booking form */
+        #booking-form {
+            background-color: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        #booking-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        #booking-form input,
+        #booking-form select,
+        #booking-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        #booking-form input:focus,
+        #booking-form select:focus,
+        #booking-form textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        #booking-form button {
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #booking-form button:hover {
+            background-color: #059669;
+        }
+
+        . услуги {
+            color: #1f2937;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 font-inter">
+    <div id="message-box" class="hidden"></div>
+
+    <header class="bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 shadow-md sticky top-0 z-10 rounded-b-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-semibold">Immanu's</h1>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-6">
+                        <li><a href="#services" class="hover:text-gray-200 transition duration-300">Services</a></li>
+                        <li><a href="#portfolio" class="hover:text-gray-200 transition duration-300">Portfolio</a></li>
+                        <li><a href="#testimonials" class="hover:text-gray-200 transition duration-300">Testimonials</a></li>
+                        <li><a href="#contact" class="hover:text-gray-200 transition duration-300">Contact</a></li>
+                        <li><a href="#book" class="hover:text-gray-200 transition duration-300">Book Now</a></li>
+                    </ul>
+                </nav>
+                <button id="hamburger-btn" class="md:hidden text-white focus:outline-none" aria-label="Toggle Navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-90 z-20">
+        <div class="bg-gray-800 w-80 h-full absolute right-0 p-6">
+            <div class="flex justify-end mb-4">
+                <button id="close-menu-btn" class="text-white focus:outline-none" aria-label="Close Menu">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="block">
+                <ul class="space-y-4">
+                    <li><a href="#services" class="block text-lg text-white hover:text-gray-300 transition duration-300">Services</a></li>
+                    <li><a href="#portfolio" class="block text-lg text-white hover:text-gray-300 transition duration-300">Portfolio</a></li>
+                    <li><a href="#testimonials" class="block text-lg text-white hover:text-gray-300 transition duration-300">Testimonials</a></li>
+                    <li><a href="#contact" class="block text-lg text-white hover:text-gray-300 transition duration-300">Contact</a></li>
+                     <li><a href="#book" class="block text-lg text-white hover:text-gray-300 transition duration-300">Book Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <section class="bg-gradient-to-br from-gray-800 to-black text-white text-center py-20 px-4 rounded-lg shadow-lg mx-auto mt-8 max-w-4xl">
+        <h2 class="text-3xl font-bold mb-4">Welcome to Immanu's</h2>
+        <p class="text-lg mb-8">Barbershop & Electrical Services</p>
+        <a href="#services" class="bg-yellow-500 text-gray-900 py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-300 font-semibold">Explore Services</a>
+    </section>
+
+    <section id="services" class="container mx-auto py-16 px-4">
+        <h2 class="text-3xl font-semibold text-center mb-12 text-gray-800">Our Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-6">
+                <div class="icon text-blue-500 text-4xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-4m-10-1l4-9m4 0l4 9m-9-4h6" />
+                    </svg>
+
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-700">Barbershop</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>Haircuts</li>
+                        <li>Shaving</li>
+                        <li>Beard Trimming</li>
+                        <li>Hair Styling</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-6">
+                <div class="icon text-yellow-500 text-4xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5a7.5 7.5 0 00-15 0v3c0 1.125.875 2.135 2.189 2.237l3.281 1.094A7.017 7.017 0 009 17.25V21a1.5 1.5 0 003 0v-3.75a7.017 7.017 0 002.53-2.911l3.281-1.094A2.494 2.494 0 0021.5 13.5v-3a7.5 7.5 0 00-15-7.5z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-700">Electrical Services</h3>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>Installations</li>
+                        <li>Repairs</li>
+                        <li>Maintenance</li>
+                        <li>Consultations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="bg-gray-50 py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-center mb-12 text-gray-800">Portfolio</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/400x300/EEE/31343C" alt="Barbershop Service" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-700">Barbershop Project 1</h3>
+                        <p class="text-gray-600">Description of the barbershop project.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/400x300/EEE/31343C" alt="Electrical Service" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-700">Electrical Project 1</h3>
+                        <p class="text-gray-600">Description of the electrical project.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/400x300/EEE/31343C" alt="Barbershop Service" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-700">Barbershop Project 2</h3>
+                        <p class="text-gray-600">Description of the barbershop project.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="bg-gradient-to-r from-purple-100 to-pink-100 py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-center mb-12 text-gray-800">Testimonials</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <p class="text-gray-700 mb-4 italic">"Immanu did an amazing job with my hair. I highly recommend his services!"</p>
+                    <p class="font-semibold text-gray-600">- John Doe</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <p class="text-gray-700 mb-4 italic">"Great electrical work! Efficient and professional."</p>
+                    <p class="font-semibold text-gray-600">- Jane Smith</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-gray-100 py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-center mb-12 text-gray-800">Contact Us</h2>
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Email" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
+                        <textarea id="message" name="message" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32 resize-y" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:shadow-outline w-full">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="book" class="bg-white py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-center mb-12 text-gray-800">Book a Service</h2>
+            <form id="booking-form" class="space-y-4">
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="book-name" name="name" required>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="book-email" name="email" required>
+                </div>
+                <div>
+                    <label for="service">Service:</label>
+                    <select id="book-service" name="service">
+                        <option value="haircut">Haircut</option>
+                        <option value="shaving">Shaving</option>
+                        <option value="beard_trimming">Beard Trimming</option>
+                        <option value="hair_styling">Hair Styling</option>
+                        <option value="installation">Electrical Installation</option>
+                        <option value="repair">Electrical Repair</option>
+                        <option value="maintenance">Electrical Maintenance</option>
+                        <option value="consultation">Electrical Consultation</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="date">Date:</label>
+                    <input type="date" id="book-date" name="date" required>
+                </div>
+                <div>
+                    <label for="time">Time:</label>
+                    <input type="time" id="book-time" name="time" required>
+                </div>
+                <div>
+                    <label for="message">Additional Notes:</label>
+                    <textarea id="book-message" name="message" rows="4"></textarea>
+                </div>
+                <button type="submit">Book Now</button>
+            </form>
+        </div>
+    </section>
+
+
+    <footer class="bg-gray-800 text-white py-6 text-center rounded-t-lg shadow-md">
+        <p>© 2024 Immanu's Barbershop & Electrical Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const hamburgerBtn = document.getElementById("hamburger-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const closeMenuBtn = document.getElementById("close-menu-btn");
+        const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+        const navLinks = document.querySelectorAll('header nav a');
+        const sections = document.querySelectorAll('section');
+        const messageBox = document.getElementById('message-box');
+        const contactForm = document.getElementById('contact-form');
+        const bookingForm = document.getElementById('booking-form');
+
+        function showMessage(message, type = 'success') {
+            messageBox.textContent = message;
+            messageBox.className = `fixed top-4 left-1/2 transform -translate-x-1/2 bg-${type === 'success' ? 'green' : 'red'}-100 text-${type === 'success' ? 'green' : 'red'}-700 border border-${type === 'success' ? 'green' : 'red'}-400 px-4 py-2 rounded shadow-md z-50`;
+            messageBox.classList.add('show');
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+        hamburgerBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        closeMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+        });
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden");
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(event.target) && event.target !== hamburgerBtn) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        function updateActiveNavLink() {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 100 && window.scrollY < sectionTop + sectionHeight - 100) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === currentSectionId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNavLink);
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').slice(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(contactForm);
+            // Simulate sending data (replace with actual backend call)
+            setTimeout(() => {
+                showMessage('Message sent successfully!', 'success');
+                contactForm.reset();
+            }, 1000);
+        });
+
+        bookingForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+             const formData = new FormData(bookingForm);
+             const name = formData.get('name');
+            const email = formData.get('email');
+            const service = formData.get('service');
+            const date = formData.get('date');
+            const time = formData.get('time');
+            const message = formData.get('message');
+
+             // Simulate sending booking data (replace with actual backend call)
+            console.log("Booking Details:", { name, email, service, date, time, message });
+            setTimeout(() => {
+                showMessage('Your booking has been received!', 'success');
+                bookingForm.reset();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
